@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import Product from "../../models/Product";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Error from 'next/error'
+import Error from "next/error";
+import Link from 'next/link'
 
-const Post = ({ buyNow, addToCart, product, variants,error }) => {
+const Post = ({ buyNow, addToCart, product, variants, error }) => {
   //console.log(product,variants)
   const router = useRouter();
   const { slug } = router.query;
@@ -17,18 +18,18 @@ const Post = ({ buyNow, addToCart, product, variants,error }) => {
   const [size, setSize] = useState();
 
   useEffect(() => {
-    if(!error){
-   setColor(product.color)
-   setSize(product.size)
+    if (!error) {
+      setColor(product.color);
+      setSize(product.size);
     }
-  }, [router.query])
-  
+  }, [router.query]);
+
   const checkServiceability = async () => {
     let pins = await fetch(`${process.env.NEXT_PUBLIC_HOST}/api/pincode`);
     let pinJson = await pins.json();
     if (Object.keys(pinJson).includes(pin)) {
       setService(true);
-      toast.success(' Your pincode is serviceable', {
+      toast.success(" Your pincode is serviceable", {
         position: "bottom-center",
         autoClose: 1000,
         hideProgressBar: false,
@@ -36,10 +37,10 @@ const Post = ({ buyNow, addToCart, product, variants,error }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
     } else {
       setService(false);
-      toast.error('Sorry! Your pincode is not serviceable', {
+      toast.error("Sorry! Your pincode is not serviceable", {
         position: "bottom-center",
         autoClose: 3000,
         hideProgressBar: false,
@@ -47,21 +48,20 @@ const Post = ({ buyNow, addToCart, product, variants,error }) => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        });
+      });
     }
   };
   const onChangePin = (e) => {
     setPin(e.target.value);
-    
   };
-  
+
   const refreshVariant = (newsize, newcolor) => {
     let url = `${process.env.NEXT_PUBLIC_HOST}/product/${variants[newcolor][newsize]["slug"]}`;
     // window.location = url;
-    router.push(url)
+    router.push(url);
   };
-  if (error==404) {
-    return <Error statusCode={404} />
+  if (error == 404) {
+    return <Error statusCode={404} />;
   }
 
   return (
@@ -297,21 +297,22 @@ const Post = ({ buyNow, addToCart, product, variants,error }) => {
                       }}
                       className="rounded border appearance-none border-gray-300 py-2 focus:outline-none focus:ring-2 focus:ring-pink-200 focus:border-pink-500 text-base pl-3 pr-10"
                     >
-                      { color && Object.keys(variants[color]).includes("S") && (
+                      {color && Object.keys(variants[color]).includes("S") && (
                         <option value={"S"}>S</option>
                       )}
-                      { color && Object.keys(variants[color]).includes("M") && (
+                      {color && Object.keys(variants[color]).includes("M") && (
                         <option value={"M"}>M</option>
                       )}
-                      { color && Object.keys(variants[color]).includes("L") && (
+                      {color && Object.keys(variants[color]).includes("L") && (
                         <option value={"L"}>L</option>
                       )}
-                      { color && Object.keys(variants[color]).includes("XL") && (
+                      {color && Object.keys(variants[color]).includes("XL") && (
                         <option value={"XL"}>XL</option>
                       )}
-                      { color && Object.keys(variants[color]).includes("XXL") && (
-                        <option value={"XXL"}>XXL</option>
-                      )}
+                      {color &&
+                        Object.keys(variants[color]).includes("XXL") && (
+                          <option value={"XXL"}>XXL</option>
+                        )}
                     </select>
                     <span className="absolute right-0 top-0 h-full w-10 text-center text-gray-600 pointer-events-none flex items-center justify-center">
                       <svg
@@ -330,13 +331,18 @@ const Post = ({ buyNow, addToCart, product, variants,error }) => {
                 </div>
               </div>
               <div className="flex">
-              {product.availableQty>0 && <span className="title-font font-medium text-2xl text-gray-900">
-                  ₹{product.price}
-                </span>}
-                {product.availableQty<=0 && <span className="title-font font-medium text-2xl text-gray-900">
-                  Out of Stock!
-                </span>}
-                <button disabled={product.availableQty<=0?true:false}
+                {product.availableQty > 0 && (
+                  <span className="title-font font-medium text-2xl text-gray-900">
+                    ₹{product.price}
+                  </span>
+                )}
+                {product.availableQty <= 0 && (
+                  <span className="title-font font-medium text-2xl text-gray-900">
+                    Out of Stock!
+                  </span>
+                )}
+                <button
+                  disabled={product.availableQty <= 0 ? true : false}
                   onClick={() => {
                     buyNow(slug, 1, product.price, product.title, size, color);
                   }}
@@ -344,9 +350,17 @@ const Post = ({ buyNow, addToCart, product, variants,error }) => {
                 >
                   Buy Now
                 </button>
-                <button disabled={product.availableQty<=0?true:false}
+                <button
+                  disabled={product.availableQty <= 0 ? true : false}
                   onClick={() => {
-                    addToCart(slug, 1, product.price, product.title, size, color);
+                    addToCart(
+                      slug,
+                      1,
+                      product.price,
+                      product.title,
+                      size,
+                      color
+                    );
                   }}
                   className=" flex mx-1 md:ml-4 text-white bg-pink-500 disabled:bg-pink-300 border-0 py-2 px-2 md:px-6 focus:outline-none hover:bg-pink-600 rounded"
                 >
@@ -365,6 +379,15 @@ const Post = ({ buyNow, addToCart, product, variants,error }) => {
                   </svg>
                 </button>
               </div>
+              <div className="flex items-center my-8">
+                <span className="mr-4">Size Chart</span>
+                <Link href={'https://codeswear.nyc3.digitaloceanspaces.com/sizechart.png'} ><a target='_blank'>
+                <img
+                  src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzOCIgaGVpZ2h0PSIxMiI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIiBzdHJva2U9IiMyODc0RjAiIHN0cm9rZS13aWR0aD0iMS4zIj48cGF0aCBmaWxsPSIjRkZGIiBmaWxsLXJ1bGU9Im5vbnplcm8iIGQ9Ik0zNy4zNS42NUguNjV2MTAuN2gzNi43Vi42NXoiLz48cGF0aCBmaWxsPSIjODc4Nzg3IiBkPSJNNi42NSA4LjY1aDF2Mi43aC0xem00LTNIMTFsLS4zNS0uMzVWNWwtLjE1LjE1LS4xNS0uMTV2LjNsLS4zNS4zNWguMzV2NS43SDEwbC4zNS4zNXYuM2wuMTUtLjE1LjE1LjE1di0uM2wuMzUtLjM1aC0uMzV2LTUuN3ptNSAzSDE2bC0uMzUtLjM1VjhsLS4xNS4xNS0uMTUtLjE1di4zbC0uMzUuMzVoLjM1djIuN0gxNWwuMzUuMzV2LjNsLjE1LS4xNS4xNS4xNXYtLjNsLjM1LS4zNWgtLjM1di0yLjd6bTQtM2gxdjUuN2gtMXptNCAzaDF2Mi43aC0xem05IDBoMXYyLjdoLTF6bS00LTNoMXY1LjdoLTF6Ii8+PC9nPjwvc3ZnPg=="
+                  className="h-4"
+                /></a></Link>
+              </div>
+
               <div className="pin mt-6 flex space-x-2 text-sm">
                 <input
                   onChange={onChangePin}
@@ -397,18 +420,21 @@ const Post = ({ buyNow, addToCart, product, variants,error }) => {
   );
 };
 export async function getServerSideProps(context) {
-  let error=null;
+  let error = null;
   if (!mongoose.connections[0].readyState) {
     await mongoose.connect(process.env.MONGO_URI);
   }
 
   let product = await Product.findOne({ slug: context.query.slug });
-  if(product==null){
+  if (product == null) {
     return {
-      props: {error:404,},
+      props: { error: 404 },
     };
   }
-  let variants = await Product.find({ title: product.title,category:product.category });
+  let variants = await Product.find({
+    title: product.title,
+    category: product.category,
+  });
   let colorSizeSlug = {};
   for (let item of variants) {
     if (Object.keys(colorSizeSlug).includes(item.color)) {
@@ -419,10 +445,9 @@ export async function getServerSideProps(context) {
     }
   }
 
-
   return {
     props: {
-      error:error,
+      error: error,
       product: JSON.parse(JSON.stringify(product)),
       variants: JSON.parse(JSON.stringify(colorSizeSlug)),
     },

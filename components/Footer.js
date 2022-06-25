@@ -38,14 +38,18 @@ const Footer = () => {
       <div className="lg:w-1/4 md:w-1/2 w-full px-4">
         <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">CUSTOMER SERVICE</h2>
         <nav className="list-none mb-10">
-          <li>
-            <a className="text-gray-600 hover:text-gray-800">Contact Us</a>
+            
+        <li>
+            <Link href={'/contact'}><a className="text-gray-600 hover:text-gray-800">Contact Us</a></Link>
           </li>
+           
           <li>
-            <a className="text-gray-600 hover:text-gray-800">About Us</a>
+            <Link href={'/about'}><a className="text-gray-600 hover:text-gray-800">About Us</a></Link>
           </li>
+
+          
           <li>
-            <a className="text-gray-600 hover:text-gray-800">Return Policy</a>
+            <Link href={'/returnpolicy'}><a className="text-gray-600 hover:text-gray-800">Return Policy</a></Link>
           </li>
          
         </nav>
@@ -53,11 +57,11 @@ const Footer = () => {
       <div className="lg:w-1/4 md:w-1/2 w-full px-4">
         <h2 className="title-font font-medium text-gray-900 tracking-widest text-sm mb-3">POLICY</h2>
         <nav className="list-none mb-10">
-          <li>
-            <a className="text-gray-600 hover:text-gray-800">Privacy POLICY</a>
+        <li>
+            <Link href={'/privacypolicy'}><a className="text-gray-600 hover:text-gray-800">Privacy Policy</a></Link>
           </li>
           <li>
-            <a className="text-gray-600 hover:text-gray-800">Terms and Conditions</a>
+            <Link href={'/terms'}><a className="text-gray-600 hover:text-gray-800">Terms and Condition</a></Link>
           </li>
          
         </nav>
