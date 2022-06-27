@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Typography,
   Box,
@@ -11,48 +11,52 @@ import {
 } from "@mui/material";
 import BaseCard from "../baseCard/BaseCard";
 
-const products = [
-  {
-    id: "1",
-    name: "Sunil Joshi",
-    post: "Web Designer",
-    pname: "Elite Admin",
-    priority: "Low",
-    pbg: "primary.main",
-    budget: "3.9",
-  },
-  {
-    id: "2",
-    name: "Andrew McDownland",
-    post: "Project Manager",
-    pname: "Real Homes WP Theme",
-    priority: "Medium",
-    pbg: "secondary.main",
-    budget: "24.5",
-  },
-  {
-    id: "3",
-    name: "Christopher Jamil",
-    post: "Project Manager",
-    pname: "MedicalPro WP Theme",
-    priority: "High",
-    pbg: "error.main",
-    budget: "12.8",
-  },
-  {
-    id: "4",
-    name: "Nirav Joshi",
-    post: "Frontend Engineer",
-    pname: "Hosting Press HTML",
-    priority: "Critical",
-    pbg: "success.main",
-    budget: "2.4",
-  },
-];
+// const products = [
+//   {
+//     id: "1",
+//     name: "Sunil Joshi",
+//     post: "Web Designer",
+//     pname: "Elite Admin",
+//     priority: "Low",
+//     pbg: "primary.main",
+//     budget: "3.9",
+//   },
+//   {
+//     id: "2",
+//     name: "Andrew McDownland",
+//     post: "Project Manager",
+//     pname: "Real Homes WP Theme",
+//     priority: "Medium",
+//     pbg: "secondary.main",
+//     budget: "24.5",
+//   },
+//   {
+//     id: "3",
+//     name: "Christopher Jamil",
+//     post: "Project Manager",
+//     pname: "MedicalPro WP Theme",
+//     priority: "High",
+//     pbg: "error.main",
+//     budget: "12.8",
+//   },
+//   {
+//     id: "4",
+//     name: "Nirav Joshi",
+//     post: "Frontend Engineer",
+//     pname: "Hosting Press HTML",
+//     priority: "Critical",
+//     pbg: "success.main",
+//     budget: "2.4",
+//   },
+// ];
 
-const ProductPerfomance = () => {
+const ProductPerformance = ({products}) => {
+  useEffect(() => {
+   
+  }, [])
+  
   return (
-    <BaseCard title="Product Perfomance">
+    <BaseCard title="All Products">
       <Table
         aria-label="simple table"
         sx={{
@@ -64,42 +68,43 @@ const ProductPerfomance = () => {
           <TableRow>
             <TableCell>
               <Typography color="textSecondary" variant="h6">
-                Id
+                Title
               </Typography>
             </TableCell>
             <TableCell>
               <Typography color="textSecondary" variant="h6">
-                Assigned
+                Slug
               </Typography>
             </TableCell>
             <TableCell>
               <Typography color="textSecondary" variant="h6">
-                Name
+                Image
               </Typography>
             </TableCell>
+            
             <TableCell>
               <Typography color="textSecondary" variant="h6">
-                Priority
+              Size/Color
               </Typography>
             </TableCell>
             <TableCell align="right">
               <Typography color="textSecondary" variant="h6">
-                Budget
+                Price
               </Typography>
             </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {products.map((product) => (
-            <TableRow key={product.name}>
+            <TableRow key={product.slug}>
               <TableCell>
                 <Typography
                   sx={{
-                    fontSize: "15px",
+                    fontSize: "12px",
                     fontWeight: "500",
                   }}
                 >
-                  {product.id}
+                  {product.title}
                 </Typography>
               </TableCell>
               <TableCell>
@@ -113,41 +118,38 @@ const ProductPerfomance = () => {
                     <Typography
                       variant="h6"
                       sx={{
-                        fontWeight: "600",
+                        fontSize: "12px",
+                        fontWeight: "100",
                       }}
                     >
-                      {product.name}
+                      {product.slug}
                     </Typography>
                     <Typography
                       color="textSecondary"
                       sx={{
-                        fontSize: "13px",
+                        fontSize: "8px",
                       }}
                     >
-                      {product.post}
+                      
+                      
                     </Typography>
                   </Box>
+                 
                 </Box>
               </TableCell>
               <TableCell>
+              <img style={{height:'42px',margin:'0 12px'}} src={product.img} alt="" />
+              </TableCell>
+              <TableCell>
                 <Typography color="textSecondary" variant="h6">
-                  {product.pname}
+                  {product.size}/{product.color}
                 </Typography>
               </TableCell>
               <TableCell>
-                <Chip
-                  sx={{
-                    pl: "4px",
-                    pr: "4px",
-                    backgroundColor: product.pbg,
-                    color: "#fff",
-                  }}
-                  size="small"
-                  label={product.priority}
-                ></Chip>
+             
               </TableCell>
-              <TableCell align="right">
-                <Typography variant="h6">${product.budget}k</Typography>
+              <TableCell >
+                <Typography >Rs.{product.price}</Typography>
               </TableCell>
             </TableRow>
           ))}
@@ -157,4 +159,4 @@ const ProductPerfomance = () => {
   );
 };
 
-export default ProductPerfomance;
+export default ProductPerformance;
